@@ -1,0 +1,17 @@
+﻿@model ManoVerslas.Models.PageViewModels.Page
+
+@{
+    ViewBag.Title = "AddImageToPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("AddImageToPage", "Page", FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="addVidCont">
+        <input type="hidden" name="slug" value="@Model.UrlSeo" />
+        <input type="hidden" name="pageid" value="@Model.ID" />
+        <input class="addVidToPost" type="url" name="videoUrl" />
+        <input class="addVidBtn" type="submit" value="&#x27a5;" />
+    </div>
+}

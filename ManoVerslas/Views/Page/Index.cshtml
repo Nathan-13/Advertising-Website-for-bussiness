@@ -1,0 +1,32 @@
+﻿@model PagedList.IPagedList<ManoVerslas.Models.PageViewModels.PageViewModel>
+@using ManoVerslas.Controllers
+
+@using ManoVerslas.Controllers
+
+@{
+    ViewBag.Title = "Page Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="blogControlPanel">
+    @using (Html.BeginForm("Index", "Page", FormMethod.Get, new { @class = "indexSearchForm" }))
+            {
+                if (ViewBag.CurrentSearchString != null)
+                {
+                    foreach (var item in ViewBag.CurrentSearchString)
+                    {
+                <input type="hidden" name="searchString" value="@item" />
+            }
+        }
+                <input type="search" name="searchString" value="@ViewBag.CurrentSearchString" placeholder="Search..." />
+                <input type="submit" value="&#128270;" style="background:none;border:none;" />
+    }
+
+    </div>
+
+    <div class="pageContainer">
+    <div class="mainpageview">
+        @{Html.RenderPartial("Pages");}
+
+    </div>
+</div>
+<p>@Html.Partial("_ParentCategories")</p>

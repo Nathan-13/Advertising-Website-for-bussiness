@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ManoVerslas.Models.PageViewModels.ParentCategory>
+@*@model ICollection<ManoVerslas.Models.PageViewModels.PagesListViewModel>*@
+@using ManoVerslas.Controllers
+
+@*@foreach (var item in Model)
+{
+   @Html.AntiForgeryToken()
+
+    if (item.ParentCategories != null)
+    {
+        <li class="dropdown">
+            @Html.ActionLink(item.ParentCategories.Name, actionName: "ParentCategoriesList", controllerName: "Page", routeValues: new { ParentCategoryId = Model.Id, slug = Model.UrlSeo }, htmlAttributes: null)
+
+
+        </li>
+    }
+}*@
+
+@foreach (var item in Model)
+{
+
+    <li class="dropdown">
+        @Html.ActionLink(@item.PCatName, "ParentCategoriesList2", "Page", new { Id = item.Id, productName = item.PCatName }, null)
+        <ul>
+            @foreach (var child in item.ChildCategories)
+            {
+                <li class="dropdown">
+                    @Html.ActionLink(child.CCatName, "ParentCategoriesList2")
+                </li>
+            }
+        </ul>
+
+    </li>
+}

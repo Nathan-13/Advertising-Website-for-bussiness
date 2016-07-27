@@ -1,0 +1,57 @@
+﻿@model PagedList.IPagedList<ManoVerslas.Models.PageViewModels.PageViewModel>
+@using PagedList.Mvc;
+@using ManoVerslas.Controllers
+<link href="~/Content/css/PagedList.css" rel="stylesheet" />
+
+@{
+    PageController pageCtrl = new PageController();
+}
+@foreach (var page in Model)
+{
+
+    <div class="pageDescContainer">
+
+        <div class="pageUserImage">
+
+            <a href="@Url.Action("UserPage", "Page")">
+                <img src="@Url.Content(@page.UserImage)" width="100" height="50" />
+            </a>
+        </div>
+        <div class="pageUserName">
+            <div>@Html.ActionLink(@page.UserName, "UserPage", "Page", new { slug = @page.UrlSeo }, null) </div>
+        </div>
+        <div class="pagechildCategories">
+            <div>@Page.childCategories</div>
+        </div>
+        <div class="pageCity">
+            <div>@page.City</div>
+        </div>
+        <div class="pageShortDescription">@Html.ActionLink(@page.ShortDescription, "UserPage", "Page", new { slug = @page.UrlSeo }, null)</div>
+        <div class="pagePhoneNumber">@page.PhoneNumber</div>
+        <div class="pageAddress">@page.Address</div>
+        <div class="postDescBody">
+            @{
+                var pageImages = pageCtrl.GetPageImages(page.Page);
+                if (pageImages != null)
+                {
+                    <div class="pageImgCont">
+                        @foreach (var image in pageImages)
+                        {
+                            <img src="@Url.Content(image.ImageUrl)" width="200" height="100" />
+                        }
+                    </div>
+                }
+            }
+ 
+        </div>
+     </div>
+
+                }
+<div id="spacer"></div>
+<div class="paging">
+    <div class="pagenum">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+
+    @Html.PagedListPager(Model, psl => Url.Action("Index", "Page", new { psl, searchString = ViewBag.SearchString }))
+</div>

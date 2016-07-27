@@ -1,0 +1,59 @@
+﻿@model ManoVerslas.Models.PageViewModels.UserPageViewModel
+@using ManoVerslas.Controllers
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = Model.UserName;
+    ViewBag.Description = Model.Meta;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    PageController pageCtrl = new PageController();
+}
+@section Scripts
+{
+    <script src="~/Scripts/view.js"></script>
+    <script src="~/ckeditor/ckeditor.js"></script>
+}
+<div id="pageScroll">
+    <div class="pageContainer">
+        @*@if (User.IsInRole("Admin"))
+        {
+            <div class="postMenu">
+                <div class="postMenuSub">
+                    <a href="@Url.Action("EditPost","Blog",new {slug = Model.UrlSeo })" title="Edit"><img src="@Url.Content("~/Content/images/post/edit.png")" width="25" height="25" alt="edit" /></a>
+                    <a href="@Url.Action("DeletePost","Blog",new {postid = Model.ID })" title="Delete"><img src="@Url.Content("~/Content/images/post/delete.png")" width="25" height="25" alt="delete" /></a>
+                </div>
+            </div>
+        }*@
+        <div class="pageHeader">
+           @if (Model.ID != Model.FirstPageId)
+            {
+                @Html.ActionLink("<< Previous", "UserPage", "Page", new { slug = Model.PreviousPageSlug }, new { style = "float:left;" })
+            }
+            @if (Model.ID != Model.LastPageId)
+            {
+                @Html.ActionLink("Next >>", "UserPage", "Page", new { slug = Model.NextPageSlug }, new { style = "float:right;" })
+            }
+            <a href="@Url.Action("EditPage","Page",new {slug = Model.UrlSeo })" title="Edit"><img src="@Url.Content("~/Content/images/post/edit.png")" width="25" height="25" alt="edit" /></a>
+        </div>
+        </br>
+        <div class="pageUserName"><h2>@Model.UserName</h2></div>
+        <div class="pageCity">@Model.City</div>
+        <div id="pageUserImage">
+            <img src="@Url.Content(Model.UserImage)" height="150" width="100" />
+        </div>
+        <div class="pageBody">@Html.Raw(Model.Body)</div>
+        @if (Model.Images != null)
+        {
+            foreach (var image in Model.Images)
+            {
+                <div class="pageImage">
+                    <img src="@Url.Content(image.ImageUrl)" width="200" height="100"/>
+                </div>
+            }
+        }
+        <div class="pageExp">@Model.Exp</div>
+        <div class="pageEmail">@Model.Email</div>
+        <div class="pageAddress">@Model.Address</div>
+        <div class="pagePhoneNumber">@Model.PhoneNumber</div>
+    </div>
+</div>
+
